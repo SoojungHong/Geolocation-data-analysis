@@ -153,7 +153,9 @@ location_data = load_data("locations.csv")
 visits_data = load_data("visits.csv")
 
 
-
+#-------------------
+# Not that great
+#-------------------
 
 import pandas as pd 
 #cities = pd.read_csv('my_csv.csv')
@@ -189,4 +191,98 @@ for a in [100, 300, 500]:
     plt.scatter([], [], c = 'k', alpha=0.5, s = a, label=str(a) + ' km$^2$')
 plt.legend(scatterpoints=1, frameon=False, labelspacing=1, loc='lower left')
 
+"""
+# using google map
+mplt.register_api_key('your_google_api_key_here')
+mplt.density_plot(df['latitude'], df['longitude'])
+"""
 
+
+
+#-----------
+# test 
+# reference : https://github.com/wrobell/geotiler/blob/master/examples/ex-basemap.py
+# https://wrobell.dcmod.org/geotiler/usage.html
+#-----------
+"""
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+
+import logging
+logging.basicConfig(level=logging.DEBUG)
+
+import geotiler
+
+bbox = 11.78560, 46.48083, 11.79067, 46.48283
+
+fig = plt.figure(figsize=(10, 10))
+ax = plt.subplot(111)
+
+#
+# download background map using OpenStreetMap
+#
+mm = geotiler.Map(extent=bbox, zoom=18)
+
+img = geotiler.render_map(mm)
+
+#
+# create basemap
+#
+map = Basemap(
+    llcrnrlon=bbox[0], llcrnrlat=bbox[1],
+    urcrnrlon=bbox[2], urcrnrlat=bbox[3],
+    projection='merc', ax=ax
+)
+
+map.imshow(img, interpolation='lanczos', origin='upper')
+
+#
+# plot custom points
+#
+x0, y0 = 11.78816, 46.48114 # http://www.openstreetmap.org/search?query=46.48114%2C11.78816
+x1, y1 = 11.78771, 46.48165 # http://www.openstreetmap.org/search?query=46.48165%2C11.78771
+x, y = map((x0, x1), (y0, y1))
+ax.scatter(x, y, c='red', edgecolor='none', s=10, alpha=0.9)
+
+plt.savefig('ex-basemap.pdf', bbox_inches='tight')
+plt.close()
+"""
+
+from gmplot import gmplot
+
+# Place map
+gmap = gmplot.GoogleMapPlotter(37.766956, -122.438481, 13)
+
+# Polygon
+golden_gate_park_lats, golden_gate_park_lons = zip(*[
+    (37.771269, -122.511015),
+    (37.773495, -122.464830),
+    (37.774797, -122.454538),
+    (37.771988, -122.454018),
+    (37.773646, -122.440979),
+    (37.772742, -122.440797),
+    (37.771096, -122.453889),
+    (37.768669, -122.453518),
+    (37.766227, -122.460213),
+    (37.764028, -122.510347),
+    (37.771269, -122.511015)
+    ])
+gmap.plot(golden_gate_park_lats, golden_gate_park_lons, 'cornflowerblue', edge_width=10)
+
+# Scatter points
+top_attraction_lats, top_attraction_lons = zip(*[
+    (37.769901, -122.498331),
+    (37.768645, -122.475328),
+    (37.771478, -122.468677),
+    (37.769867, -122.466102),
+    (37.767187, -122.467496),
+    (37.770104, -122.470436)
+    ])
+gmap.scatter(top_attraction_lats, top_attraction_lons, '#3B0B39', size=40, marker=False)
+
+# Marker
+hidden_gem_lat, hidden_gem_lon = 37.770776, -122.461689
+gmap.marker(hidden_gem_lat, hidden_gem_lon, 'cornflowerblue')
+
+# Draw
+gmap.draw("my_map.html")

@@ -58,25 +58,27 @@ visits_data.dtypes
 sorted_visits_w_id = visits_data.sort_values(['id'], ascending=True)
 sorted_visits_w_id # 147967 ~ 170716
 
-#-----------------------------
-# plot GPS coordinate to map
-"""
-# using google map
-mplt.register_api_key('your_google_api_key_here')
-mplt.density_plot(df['latitude'], df['longitude'])
-"""
 
-"""
-# show the location in the map and save it separate html file with map --> looks ugly
-# list of values
-lati = location_data["latitude"] 
-longi = location_data["longitude"] 
+#--------------------------------
+# data plotting with a few data
 
-center_lat = np.mean(lati)
-center_lon = np.mean(longi)
-zoom = 15
+def plotLocation(data): 
+    lati = data["latitude"] 
+    longi = data["longitude"] 
 
-gmap = gmplot.GoogleMapPlotter(center_lat, center_lon, zoom) 
-gmap.scatter(lati, longi)
-gmap.draw('my_map.html')
-"""
+    center_lat = np.mean(lati)
+    center_lon = np.mean(longi)
+    zoom = 15
+
+    #fileName = outfile+'.html'
+    gmap = gmplot.GoogleMapPlotter(center_lat, center_lon, zoom) 
+    gmap.scatter(lati, longi)
+    gmap.draw('plot.html')
+
+
+few_loc = location_data.loc[0:10]
+few_loc 
+plotLocation(few_loc)
+
+
+
