@@ -139,3 +139,54 @@ plt.text(x, y, ' switzerland', fontsize=12)
 # ToDo : California city
 #--------------------------
 # https://jakevdp.github.io/PythonDataScienceHandbook/04.13-geographic-data-with-basemap.html
+
+
+#-------------------
+#  1. Load data
+CSV_PATH = "/Users/soojunghong/Documents/2018 Job Applications/Axon_Vibe_Data_Scientist/Task/location_data/"   
+
+def load_data(filename, csv_path=CSV_PATH):
+    file_path = os.path.join(csv_path, filename)
+    return pd.read_csv(file_path)
+
+location_data = load_data("locations.csv")
+visits_data = load_data("visits.csv")
+
+
+
+
+import pandas as pd 
+#cities = pd.read_csv('my_csv.csv')
+file_path = os.path.join(CSV_PATH, "locations.csv")
+cities = pd.read_csv(file_path)
+
+
+# extract data we are interested in
+lat = cities['latitude'].values
+lon = cities['longitude'].values
+population = cities['altitude'].values  #cities['population_total'].values
+area = cities['horizontal_accuracy'].values #cities['area_total_km2'].values
+
+# draw map background
+fig = plt.figure(figsize=(8,8))
+#m = Basemap(projection = 'lcc', resolution='h', lat_0 = 37.5, lon_0 = -119, width=1E6, height=1.2E6)
+m = Basemap(projection = 'lcc', resolution='h', lat_0 = 46, lon_0 = 8, width=1E6, height=1.2E6)
+
+m.shadedrelief() 
+m.drawcoastlines(color = 'gray')
+m.drawcountries(color = 'gray')
+m.drawstates(color = 'gray')
+
+# scatter city data, with color reflecting population and size reflecting area
+#m.scatter(lon, lat, latlon = True, c = np.log10(population), s = area, cmap = 'Reds', alpha=0.5)
+m.scatter(lon, lat, latlon=True)
+# create colorbar and legend
+plt.colorbar(label = r'$s\log_{10}(\rm population})$')
+plt.clim(3,7)
+
+# make legend with dummy points
+for a in [100, 300, 500]:
+    plt.scatter([], [], c = 'k', alpha=0.5, s = a, label=str(a) + ' km$^2$')
+plt.legend(scatterpoints=1, frameon=False, labelspacing=1, loc='lower left')
+
+
