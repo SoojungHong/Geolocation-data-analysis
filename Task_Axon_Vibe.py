@@ -81,4 +81,62 @@ few_loc
 plotLocation(few_loc)
 
 
+#--------------------
+# test with my data
+#--------------------
+import os 
+import pandas as pd
+import numpy as np 
 
+from mapsplotlib import mapsplot as mplt
+from gmplot import gmplot
+
+CSV_PATH = "/Users/soojunghong/Documents/2018 Job Applications/Axon_Vibe_Data_Scientist/Task/location_data/"   
+
+def load_data(filename, csv_path=CSV_PATH):
+    file_path = os.path.join(csv_path, filename)
+    return pd.read_csv(file_path)
+
+location_data = load_data("locations.csv")
+visits_data = load_data("visits.csv")
+
+lati = location_data["latitude"] 
+longi = location_data["longitude"] 
+
+center_lat = np.mean(lati)
+center_lon = np.mean(longi)
+
+gmap = gmplot.GoogleMapPlotter(center_lat, center_lon, 30)#13)
+
+# Scatter points
+"""
+top_attraction_lats, top_attraction_lons = zip(*[
+    (37.769901, -122.498331),
+    (37.768645, -122.475328),
+    (37.771478, -122.468677),
+    (37.769867, -122.466102),
+    (37.767187, -122.467496),
+    (37.770104, -122.470436)
+    ])
+"""    
+#gmap.scatter(lati, longi, '#3B0B39', size=40, marker=False)
+#228B22
+
+# partial data
+part_lati = lati.loc[0:10]
+part_longi = longi.loc[0:10]
+center_part_lat = np.mean(part_lati)
+center_part_lon = np.mean(part_longi)
+
+gmap = gmplot.GoogleMapPlotter(center_part_lat, center_part_lon, 18)#13) -> this number for map zoom in 
+
+
+gmap.scatter(part_lati, part_longi, '#00008B', size=8, marker=False)
+             
+             
+# Draw
+gmap.draw("/Users/soojunghong/Documents/2018 Job Applications/Axon_Vibe_Data_Scientist/Task/location_data/test.html")
+
+
+#---------------------------------------------------
+# ToDo : location clustering with date and time
