@@ -176,7 +176,10 @@ pyplot.figure(figsize=(12, 8))
 pyplot.plot(visits_data_clean["departure_timestamp"], cvlati)
 pyplot.show()
 
-
+# chart with both arrival and departure time 
+pyplot.figure(figsize=(13, 8))
+pyplot.plot('arrival_timestamp', 'latitude', data=visits_data_clean_lat, marker='', markerfacecolor='blue', markersize=9, color='skyblue', linewidth=2)
+pyplot.plot('departure_timestamp', 'latitude', data=visits_data_clean_lat, marker='', markerfacecolor='blue', markersize=9, color='olive', linestyle='dashed', linewidth=2)
 
 
 depart_times = visits_data["departure_timestamp"]
@@ -184,5 +187,12 @@ pyplot.figure(figsize=(12, 8))
 pyplot.plot(visits_data["arrival_timestamp"], vlongi)
 
 
-
-# Q : can plot two time series data in one chart? 
+#---------------------------------------------------
+# plot arrival and departure both with partial data
+visits_data_clean = visits_data.loc[(visits_data["departure_timestamp"].str.contains("4001-01-01 01:00:00") != True), ["latitude", "longitude", "arrival_timestamp", "departure_timestamp"]]
+visits_data_clean_part = visits_data_clean.loc[0:100]
+visits_data_clean_part_lat = visits_data_clean_part.loc[(visits_data_clean_part["departure_timestamp"].str.contains("4001-01-01 01:00:00") != True), ["latitude", "arrival_timestamp", "departure_timestamp"]]
+visits_data_clean_part_longi = visits_data_clean_part.loc[(visits_data_clean_part["departure_timestamp"].str.contains("4001-01-01 01:00:00") != True), ["longitude", "arrival_timestamp", "departure_timestamp"]]
+pyplot.figure(figsize=(13, 8))
+pyplot.plot('arrival_timestamp', 'latitude', data=visits_data_clean_part_lat, marker='', markerfacecolor='blue', markersize=9, color='skyblue', linewidth=2)
+pyplot.plot('departure_timestamp', 'latitude', data=visits_data_clean_part_lat, marker='', markerfacecolor='blue', markersize=9, color='olive', linestyle='dashed', linewidth=2)
