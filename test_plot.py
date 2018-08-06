@@ -91,3 +91,98 @@ gmap.scatter(lati, longi, '#3B0B39', size=40, marker=False)
 
 # Draw
 gmap.draw("/Users/soojunghong/Documents/2018 Job Applications/Axon_Vibe_Data_Scientist/Task/location_data/test1.html")
+
+
+#-------------------------------
+# position plotting with id 
+#-------------------------------
+from pandas import Series 
+from matplotlib import pyplot
+from matplotlib import dates
+
+# it understood as dataframe, it should be numeric value 
+#series = Series.from_csv('/Users/soojunghong/Documents/2018 Job Applications/Axon_Vibe_Data_Scientist/Task/location_data/locations.csv', header=0)
+series_location = lati
+pyplot.figure(figsize=(11,8))
+series_location.plot()
+pyplot.show()
+
+# location data - longitude distribution over time 
+series_location_longi = longi
+pyplot.figure(figsize=(12,9))
+series_location_longi.plot()
+pyplot.show()
+
+
+
+#-------------------------------
+# position plotting with time 
+#-------------------------------
+lati = location_data["latitude"] 
+longi = location_data["longitude"] 
+times = location_data["recorded_timestamp"]
+type(times[0]) #str 
+
+"""
+from dateutil import parser
+dt = parser.parse(times[0])
+type(dt)
+
+import datetime
+datetime.strptime(dt)
+"""
+# transform str to time type 
+from dateutil import parser
+location_data["recorded_timestamp"] = location_data["recorded_timestamp"].apply(lambda x : parser.parse(x) )
+type(location_data["recorded_timestamp"])
+type(location_data["recorded_timestamp"][0])
+pyplot.figure(figsize=(13,8))
+pyplot.plot(location_data["recorded_timestamp"], lati) 
+
+pyplot.figure(figsize=(13,8))
+pyplot.plot(location_data["recorded_timestamp"], longi) 
+
+#-----------------------
+# visit data plotting
+CSV_PATH = "/Users/soojunghong/Documents/2018 Job Applications/Axon_Vibe_Data_Scientist/Task/location_data/"   
+
+def load_data(filename, csv_path=CSV_PATH):
+    file_path = os.path.join(csv_path, filename)
+    return pd.read_csv(file_path)
+ 
+
+visits_data = load_data("visits.csv")
+visits_data.head()
+visits_data.dtypes
+vlati = visits_data["latitude"] 
+vlongi = visits_data["longitude"] 
+
+# we need to remove unclean data from departure_timestamp - which is 4001-01-01 date
+visits_data_clean = visits_data.loc[(visits_data["departure_timestamp"].str.contains("4001-01-01 01:00:00") != True), ["latitude", "longitude", "arrival_timestamp", "departure_timestamp"]]
+
+visits_data_clean_lat = visits_data.loc[(visits_data["departure_timestamp"].str.contains("4001-01-01 01:00:00") != True), ["latitude", "arrival_timestamp", "departure_timestamp"]]
+visits_data_clean_longi = visits_data.loc[(visits_data["departure_timestamp"].str.contains("4001-01-01 01:00:00") != True), ["longitude", "arrival_timestamp", "departure_timestamp"]]
+
+
+visits_data_clean["departure_timestamp"]
+visits_data_clean["arrival_timestamp"] = visits_data_clean["arrival_timestamp"].apply(lambda x : parser.parse(x))
+
+cvlati = visits_data_clean["latitude"] 
+cvlongi = visits_data_clean["longitude"] 
+
+pyplot.figure(figsize=(12, 8))
+pyplot.plot(visits_data_clean["arrival_timestamp"], cvlati)
+pyplot.figure(figsize=(12, 8))
+pyplot.plot(visits_data_clean["departure_timestamp"], cvlati)
+pyplot.show()
+
+
+
+
+depart_times = visits_data["departure_timestamp"]
+pyplot.figure(figsize=(12, 8))
+pyplot.plot(visits_data["arrival_timestamp"], vlongi)
+
+
+
+# Q : can plot two time series data in one chart? 

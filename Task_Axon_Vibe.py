@@ -43,6 +43,10 @@ location_data.head()
 location_data.describe()
 location_data.dtypes
 
+type(location_data['recorded_timestamp'])
+type(location_data['latitude'])
+
+
 # latitude - horizontal direction 
 # longitude - vertical direction 
 # altitude - height from sea level 
@@ -61,7 +65,7 @@ sorted_visits_w_id # 147967 ~ 170716
 
 #--------------------------------
 # data plotting with a few data
-
+"""
 def plotLocation(data): 
     lati = data["latitude"] 
     longi = data["longitude"] 
@@ -79,11 +83,11 @@ def plotLocation(data):
 few_loc = location_data.loc[0:10]
 few_loc 
 plotLocation(few_loc)
+"""
 
-
-#--------------------
-# test with my data
-#--------------------
+#-------------------------------------
+# plot position with my data on map
+#-------------------------------------
 import os 
 import pandas as pd
 import numpy as np 
@@ -106,7 +110,7 @@ longi = location_data["longitude"]
 center_lat = np.mean(lati)
 center_lon = np.mean(longi)
 
-gmap = gmplot.GoogleMapPlotter(center_lat, center_lon, 30)#13)
+gmap = gmplot.GoogleMapPlotter(center_lat, center_lon, 18)#13)
 
 # Scatter points
 """
@@ -119,10 +123,14 @@ top_attraction_lats, top_attraction_lons = zip(*[
     (37.770104, -122.470436)
     ])
 """    
-#gmap.scatter(lati, longi, '#3B0B39', size=40, marker=False)
-#228B22
+gmap.scatter(lati, longi, '#228B22', size=8, marker=False)
+                       
+# Draw
+gmap.draw("/Users/soojunghong/Documents/2018 Job Applications/Axon_Vibe_Data_Scientist/Task/location_data/test_all.html")
 
-# partial data
+
+#------------------------
+# partial data plotting 
 part_lati = lati.loc[0:10]
 part_longi = longi.loc[0:10]
 center_part_lat = np.mean(part_lati)
@@ -130,13 +138,38 @@ center_part_lon = np.mean(part_longi)
 
 gmap = gmplot.GoogleMapPlotter(center_part_lat, center_part_lon, 18)#13) -> this number for map zoom in 
 
-
 gmap.scatter(part_lati, part_longi, '#00008B', size=8, marker=False)
-             
-             
+                        
 # Draw
-gmap.draw("/Users/soojunghong/Documents/2018 Job Applications/Axon_Vibe_Data_Scientist/Task/location_data/test.html")
+gmap.draw("/Users/soojunghong/Documents/2018 Job Applications/Axon_Vibe_Data_Scientist/Task/location_data/test_partial.html")
+
+
+#-----------------------
+# visit data plotting
+
+visits_data = load_data("visits.csv")
+
+v_lati = visits_data["latitude"] 
+v_longi = visits_data["longitude"] 
+
+
+center_vlat = np.mean(v_lati)
+center_vlon = np.mean(v_longi)
+
+gmap = gmplot.GoogleMapPlotter(center_vlat, center_vlon, 18)#13)
+
+# Scatter points  
+gmap.scatter(v_lati, v_longi, '##8B008B', size=8, marker=False)
+                       
+# Draw
+gmap.draw("/Users/soojunghong/Documents/2018 Job Applications/Axon_Vibe_Data_Scientist/Task/location_data/test_visit_all.html")
+
+
+#------------------------------------------------------------
+# How data (latitude or longitude) are distributed in time 
+#------------------------------------------------------------
 
 
 #---------------------------------------------------
 # ToDo : location clustering with date and time
+# make data point with condition with date or time and plot and see how it looks like 
