@@ -95,7 +95,7 @@ import numpy as np
 from mapsplotlib import mapsplot as mplt
 from gmplot import gmplot
 
-CSV_PATH = "/Users/soojunghong/Documents/2018 Job Applications/Axon_Vibe_Data_Scientist/Task/location_data/"   
+CSV_PATH = "/Users/soojunghong/Documents/location_data/"   
 
 def load_data(filename, csv_path=CSV_PATH):
     file_path = os.path.join(csv_path, filename)
