@@ -126,7 +126,7 @@ top_attraction_lats, top_attraction_lons = zip(*[
 gmap.scatter(lati, longi, '#228B22', size=8, marker=False)
                        
 # Draw
-gmap.draw("/Users/soojunghong/Documents/2018 Job Applications/Axon_Vibe_Data_Scientist/Task/location_data/test_all.html")
+gmap.draw("/Users/soojunghong/Documents/Geolocation/test_all.html")
 
 
 #------------------------
@@ -141,7 +141,7 @@ gmap = gmplot.GoogleMapPlotter(center_part_lat, center_part_lon, 18)#13) -> this
 gmap.scatter(part_lati, part_longi, '#00008B', size=8, marker=False)
                         
 # Draw
-gmap.draw("/Users/soojunghong/Documents/2018 Job Applications/Axon_Vibe_Data_Scientist/Task/location_data/test_partial.html")
+gmap.draw("/Users/soojunghong/Documents/location_data/test_partial.html")
 
 
 #-----------------------
@@ -162,7 +162,7 @@ gmap = gmplot.GoogleMapPlotter(center_vlat, center_vlon, 18)#13)
 gmap.scatter(v_lati, v_longi, '##8B008B', size=8, marker=False)
                        
 # Draw
-gmap.draw("/Users/soojunghong/Documents/2018 Job Applications/Axon_Vibe_Data_Scientist/Task/location_data/test_visit_all.html")
+gmap.draw("/Users/soojunghong/Documents/location_data/test_visit_all.html")
 
 
 #------------------------------------------------------------
