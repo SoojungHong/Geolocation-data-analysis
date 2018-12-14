@@ -5,7 +5,7 @@ Created on Thu Aug  2 15:54:26 2018
 
 @author: soojunghong
 
-@about : Axon Vibe task 
+@about : Geo data analysis
 
 @date : August 2. 2018 
 """
@@ -25,7 +25,7 @@ from gmplot import gmplot
 #-------------------
 #  1. Load data
 #-------------------
-CSV_PATH = "/Users/soojunghong/Documents/2018 Job Applications/Axon_Vibe_Data_Scientist/Task/location_data/"   
+CSV_PATH = "/Users/soojunghong/Documents/Geodata"   
 
 def load_data(filename, csv_path=CSV_PATH):
     file_path = os.path.join(csv_path, filename)
