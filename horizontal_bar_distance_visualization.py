@@ -19,11 +19,8 @@ from math import sin, cos, sqrt, atan2, radians
 #==========
 # data
 #==========
-CHICAGO_RECO_DATA = "C:/Users/shong/Documents/data/chicago6month_user_result_reco_09012019.tsv"
-CHICAGO_RECO_HEADER = ['cookie', 'result_name', 'result_provider', 'timestamp', 'query_raw', 'query_string', 'query_normalized', 'query_language', 'place_name', 'result_lat','result_lon', 'result_index', 'result_relevance', 'result_rank', 'query_lat', 'query_lon']
-# schema
-    # cookie	result_name	result_provider	timestamp	query_raw	query_string	query_normalized	query_language	place_name	result_lat	result_lon	result_index	result_relevance	result_rank query_lat query_lon
-
+CHICAGO_RECO_DATA = "C:/Users/shong/Documents/data.tsv"
+CHICAGO_RECO_HEADER = #confidential
 
 #=============
 # functions 
