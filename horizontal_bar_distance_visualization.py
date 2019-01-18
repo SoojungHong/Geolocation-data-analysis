@@ -96,7 +96,22 @@ def visualizeHorizontalBar(places, distances, query):
     plt.title(currtitle)
     plt.show()
     
+
+def histogramAllDistances(all_distance): 
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+    plt.figure(figsize=(10,10))
+    #bins = [0, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 10, 15, 20, 30, 75, 100]
+    bins = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 60, 80, 100]
+    hist, bins = np.histogram(all_distance[0:47800], bins=bins)
+    width = 0.7 * (bins[5] - bins[4])
+    center = (bins[:-1] + bins[1:]) / 2
+    plt.bar(center, hist, align='center', width=width)
+    plt.xlabel('Distance (km)')
+    plt.ylabel('Number of POI')
     
+    plt.show()    
         
 
     
